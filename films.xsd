@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Types simples avec contraintes -->
+    <xs:simpleType name="GenreFilm">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Action"/>
+            <xs:enumeration value="Drame"/>
+            <xs:enumeration value="Comedie"/>
+            <xs:enumeration value="ScienceFiction"/>
+            <xs:enumeration value="Animation"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="NoteFilm">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="10"/>
+            <xs:fractionDigits value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="AnneeFilm">
+        <xs:restriction base="xs:gYear">
+            <xs:minInclusive value="1888"/>
+            <xs:maxInclusive value="2100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Types complexes : réalisateur, acteur, projection et film -->
+    <xs:complexType name="RealisateurType">
+        <xs:sequence>
+            <xs:element name="nom" type="xs:string"/>
+            <xs:element name="nationalite" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ActeurType">
+        <xs:sequence>
+            <xs:element name="nom" type="xs:string"/>
+            <xs:element name="role" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="principal" type="xs:boolean" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ProjectionType">
+        <xs:sequence>
+            <xs:element name="date" type="xs:date"/>
+            <xs:element name="heure" type="xs:time"/>
+            <xs:element name="prix" type="xs:decimal"/>
+        </xs:sequence>
+        <xs:attribute name="salle" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="FilmType">
+        <xs:sequence>
+            <xs:element name="titre" type="xs:string"/>
+            <xs:element name="annee" type="AnneeFilm"/>
+            <xs:element name="genre" type="GenreFilm"/>
+            <xs:element name="note" type="NoteFilm"/>
+            <xs:element name="realisateurRef" type="xs:IDREF"/>
+
+            <xs:element name="acteurs">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="acteur"
+                                    type="ActeurType"
+                                    minOccurs="1"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="projections">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="projection"
+                                    type="ProjectionType"
+                                    minOccurs="1"
+                                    maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="disponible" type="xs:boolean" use="required"/>
+    </xs:complexType>
+
+    <!-- Structure principale -->
+    <xs:element name="cinema">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="nom" type="xs:string"/>
+
+                <xs:element name="realisateurs">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="realisateur"
+                                        type="RealisateurType"
+                                        minOccurs="1"
+                                        maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="films">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="film"
+                                        type="FilmType"
+                                        minOccurs="1"
+                                        maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

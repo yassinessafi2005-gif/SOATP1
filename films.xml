@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cinema>
+    <nom>Cinema Sfax</nom>
+
+    <realisateurs>
+        <realisateur id="R1">
+            <nom>Christopher Nolan</nom>
+            <nationalite>British</nationalite>
+        </realisateur>
+    </realisateurs>
+
+    <films>
+        <film id="F1" disponible="true">
+            <titre>Inception</titre>
+            <annee>2010</annee>
+            <genre>ScienceFiction</genre>
+            <note>8.8</note>
+            <realisateurRef>R1</realisateurRef>
+
+            <acteurs>
+                <acteur id="A1" principal="true">
+                    <nom>Leonardo DiCaprio</nom>
+                    <role>Cobb</role>
+                </acteur>
+                <acteur id="A2" principal="false">
+                    <nom>Joseph Gordon-Levitt</nom>
+                    <role>Arthur</role>
+                </acteur>
+            </acteurs>
+
+            <projections>
+                <projection salle="Salle1">
+                    <date>2025-11-10</date>
+                    <heure>18:30:00</heure>
+                    <prix>12.500</prix>
+                </projection>
+                <projection salle="Salle2">
+                    <date>2025-11-11</date>
+                    <heure>20:00:00</heure>
+                    <prix>15.000</prix>
+                </projection>
+            </projections>
+        </film>
+    </films>
+</cinema>
